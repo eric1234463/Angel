@@ -1,0 +1,47 @@
+<ion-content padding color='secondary' class='loginBackground'>
+  <ion-row class="loginIconRow">
+    <ion-col col-3></ion-col>
+    <ion-col col-6 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+      <img src="assets/icon.png">
+    </ion-col>
+    <ion-col col-3></ion-col>
+  </ion-row>
+  <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+    <ion-item class="inputBox">
+      <ion-label>
+        <ion-icon class='inputIcon' color='primary' name="ios-mail-outline"></ion-icon>
+      </ion-label>
+      <ion-input #email formControlName="email" type="email" placeholder="Your email address" [class.invalid]="!loginForm.controls.email.valid &&
+          loginForm.controls.email.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid  &&
+      loginForm.controls.email.dirty">
+      <p>Please enter a valid email.</p>
+    </ion-item>
+
+    <ion-item class="inputBox">
+      <ion-label>
+        <ion-icon class='inputIcon' color='primary' name="ios-lock-outline"></ion-icon>
+      </ion-label>
+      <ion-input #password formControlName="password" type="password" placeholder="Your password" [class.invalid]="!loginForm.controls.password.valid &&
+          loginForm.controls.password.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid  &&
+      loginForm.controls.password.dirty">
+      <p>Your password needs more than 6 characters.</p>
+    </ion-item>
+
+
+    <button ion-button block round type="submit">
+      Login
+    </button>
+
+  </form>
+
+
+
+  <button ion-button block outline round (click)="signup()">
+    Sign Up
+  </button>
+
+</ion-content>

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>Chat</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let chat of chatList| async" (click)="navigate()">
+            <ion-avatar item-left>
+                <img src="assets/boy.png">
+            </ion-avatar>
+            <h2>{{chat.name}}</h2>
+            <p>{{chat.message}}</p>
+            <p item-right>{{chat.time}}</p>
+            <ion-badge item-right color="danger">3</ion-badge>
+        </ion-item>
+        <ion-item *ngFor="let chat of chatList| async" (click)="navigate()">
+            <ion-avatar item-left>
+                <img src="assets/girl.png">
+            </ion-avatar>
+            <h2>{{chat.name}}</h2>
+            <p>{{chat.message}}</p>
+            <p item-right>{{chat.time}}</p>
+            <ion-badge item-right color="danger">3</ion-badge>
+        </ion-item>
+    </ion-list>
+</ion-content>
