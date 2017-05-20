@@ -18,6 +18,8 @@ export class HomePage {
             .subscribe(user => {
                 if (user.emailVerified) {
                     console.log('success');
+                    this.auth.setCurrentUser(user.email,user.uid,user.photoURL,user.displayName);
+                    
                 } else {
                     user.sendEmailVerification();
                     this

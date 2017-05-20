@@ -31,33 +31,30 @@ export class LoginPage {
     loginUser() {
         console.log(this.loginForm.value.email);
         console.log(this.loginForm.value.password);
-        var errorAlert;
         this
             .auth
             .loginUser(this.loginForm.value.email, this.loginForm.value.password)
             .then(success => {
                 this
-                      .appCtrl
-                      .getRootNav()
-                      .setRoot(TabsPage);
+                    .appCtrl
+                    .getRootNav()
+                    .setRoot(TabsPage);
             }, error => {
-                errorAlert = true;
+                let alert = this
+                    .alertCtrl
+                    .create({
+                        title: 'Login Error',
+                        message: 'Please Login Again!',
+                        buttons: [
+                            {
+                                text: 'Ok',
+                                handler: () => {}
+                            }
+                        ]
+                    });
+                alert.present();
             });
-        if (errorAlert == true) {
-            let alert = this
-                .alertCtrl
-                .create({
-                    title: 'Login Error',
-                    message: 'Please Login Again!',
-                    buttons: [
-                        {
-                            text: 'Ok',
-                            handler: () => {}
-                        }
-                    ]
-                });
-            alert.present();
-        }
+
     }
     signup() {
         this
