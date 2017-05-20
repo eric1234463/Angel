@@ -1,24 +1,56 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, AlertController, App} from 'ionic-angular';
 import {AngularFireAuth} from 'angularfire2/auth';
+import {AuthService} from '../../services/authservice';
+import {LoginPage} from '../login/login';
+import {AngularFireDatabase} from 'angularfire2/database';
 
-@Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
-})
+@Component({selector: 'page-home', templateUrl: 'home.html'})
 export class HomePage {
 
-  constructor(public navCtrl: NavController,public afAuth : AngularFireAuth) {
-    const authObserver = afAuth
-      .authState
-      .subscribe(user => {
-        if (user) {
-          console.log(user);
-          authObserver.unsubscribe();
-        } else {
-          authObserver.unsubscribe();
-        }
-      });
-  }
+    constructor(public navCtrl : NavController, public afAuth : AngularFireAuth, public afDB : AngularFireDatabase, public auth : AuthService, public alertCtrl : AlertController, public appCtrl : App) {
+        console.log('Hello');
+    }
+    ionViewDidLoad() {
+        this
+            .afAuth
+            .authState
+            .subscribe(user => {
+                if (user.emailVerified) {
+                    console.log('success');
+                } else {
+                    user.sendEmailVerification();
+                    this
+                        .afDB
+                        .list('/user')
+                        .push({uid: user.uid, email: user.email, displayName: user.displayName, photoUrl: user.photoURL});
+                    this
+                        .auth
+                        .logoutUser()
+                        .then(success => {
+
+                            let verifiedAlert = this
+                                .alertCtrl
+                                .create({
+                                    title: 'Email is not verified',
+                                    message: 'Please Go to verifie your email!',
+                                    buttons: [
+                                        {
+                                            text: 'Ok',
+                                            handler: () => {
+                                                this
+                                                    .appCtrl
+                                                    .getRootNav()
+                                                    .setRoot(LoginPage);
+                                            }
+                                        }
+                                    ]
+                                });
+                            verifiedAlert.present();
+                        });
+                }
+            });
+
+    }
 
 }

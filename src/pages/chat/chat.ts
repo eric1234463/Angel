@@ -9,7 +9,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 export class Chat {
 
     public chatList: FirebaseListObservable <any[]> ;
-    constructor(public navCtrl: NavController, afDB: AngularFireDatabase, public appCtrl: App) {
+    constructor(public navCtrl: NavController, public afDB: AngularFireDatabase, public appCtrl: App) {
         this.navCtrl = navCtrl;
         this.chatList = afDB.list('/chat');
         console.log(this.chatList);

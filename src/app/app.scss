@@ -1,7 +1,4 @@
-
 // http://ionicframework.com/docs/v2/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -15,3 +12,44 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.error-message .item-inner {
+    border-bottom: 0 !important;
+}
+
+.inputBox {
+    background: transparent!important;
+}
+
+.inputIcon {
+    font-size: 3.7rem;
+}
+
+.invalid {
+    border-bottom: 1px solid #FF6153;
+}
+
+.error-message .item-inner {
+    border-bottom: 0 !important;
+}
+
+.pirmaryBackground {
+    background-color: #2C3D4F;
+}
+
+ion-label {
+    margin-left: 15px;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Kanit:400,800,900');
+@import url('https://fonts.googleapis.com/earlyaccess/cwtexming.css');
+* {
+    font-family: 'Kanit', 'cwTeXMing', sans-serif;
+}
+
+input,
+button,
+select,
+textarea {
+    font-family: 'Kanit', 'cwTeXMing', sans-serif;
+    font-weight: bold;
+}

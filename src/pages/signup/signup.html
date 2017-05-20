@@ -1,18 +1,54 @@
-<!--
-  Generated template for the SignupPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>signup</ion-title>
-  </ion-navbar>
-
+    <ion-navbar color="secondary">
+        <ion-title>Sign Up</ion-title>
+    </ion-navbar>
 </ion-header>
 
+<ion-content padding class="pirmaryBackground">
+    <form [formGroup]="userForm" (ngSubmit)="signup()">
+        <ion-item class="inputBox">
+            <ion-label>
+                <ion-icon class='inputIcon' color='primary' name="school"></ion-icon>
+            </ion-label>
+            <ion-select formControlName="school" multiple="false" (ngModelChange)="selectSchool()">
+                <ion-option *ngFor="let school of schoolList| async" [value]="school.schoolEmail">{{school.schoolName}}</ion-option>
+            </ion-select>
+        </ion-item>
 
-<ion-content padding>
+         <ion-item class="inputBox">
+            <ion-label>
+                <ion-icon class='inputIcon' color='primary' name="card"></ion-icon>
+            </ion-label>
+            <ion-input formControlName="studentID" type="text" [(ngModel)]='studentID' placeholder="Your Student ID" [class.invalid]="!userForm.controls.studentID.valid &&
+          userForm.controls.studentID.dirty" (ngModelChange)="changeStudentID()"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="!userForm.controls.studentID.valid  &&
+      userForm.controls.studentID.dirty">
+            <p>Please enter a valid email.</p>
+        </ion-item>
 
+        <ion-item class="inputBox">
+            <ion-label>
+                <ion-icon class='inputIcon' color='primary' name="mail"></ion-icon>
+            </ion-label>
+            <ion-input formControlName="schoolEmail" type="email" [(ngModel)]='schoolEmail' [disabled]='inputDisabled' placeholder="Your email address" [class.invalid]="!userForm.controls.schoolEmail.valid &&
+          userForm.controls.schoolEmail.dirty"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="!userForm.controls.schoolEmail.valid  &&
+      userForm.controls.schoolEmail.dirty">
+            <p>Please enter a valid email.</p>
+        </ion-item>
+        <ion-item class="inputBox">
+            <ion-label>
+                <ion-icon class='inputIcon' color='primary' name="ios-lock-outline"></ion-icon>
+            </ion-label>
+            <ion-input formControlName="password" type="password" placeholder="Your password" [class.invalid]="!userForm.controls.password.valid &&
+          userForm.controls.password.dirty"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="!userForm.controls.password.valid  &&
+      userForm.controls.password.dirty">
+            <p>Your password needs more than 6 characters.</p>
+        </ion-item>
+        <button ion-button block type="button" [disabled]="!userForm.valid" (click)='signup()'>Sign Up</button>
+    </form>
 </ion-content>
