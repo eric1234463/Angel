@@ -15,6 +15,7 @@ import {LoginPage} from '../pages/login/login';
 import {Chatroom} from '../pages/chat/chatroom/chatroom';
 import {AuthService} from '../services/authservice';
 import {SignUpPage} from '../pages/signup/signup';
+import {MomentModule} from 'angular2-moment';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDQuiL3JT5bsT6EG806UjBbrhoz1UszMRQ",
@@ -40,7 +41,8 @@ export const firebaseConfig = {
     BrowserModule, IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MomentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

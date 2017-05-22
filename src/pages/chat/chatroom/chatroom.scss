@@ -1,71 +1,64 @@
   page-chatroom {
-    .chat {
-      .messages {
-        width: 100%;
-        position: absolute;
-        .messagesbox {
-          width: 90%;
-          float: left;
-          img.avatar {
-            margin: 10px 10px 0px 10px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: block;
-            float: left;
+      .chat {
+          .messages {
+              width: 100%;
+              position: absolute;
+              .messagesbox {
+                  width: 90%;
+                  float: left;
+                  img.avatar {
+                      margin: 10px 10px 0px 10px;
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 50%;
+                      display: block;
+                      float: left;
+                  }
+                  .message {
+                      position: relative;
+                      background: #00BFA5;
+                      -webkit-border-radius: 10px;
+                      -moz-border-radius: 10px;
+                      border-radius: 5px;
+                      width: 70%;
+                      padding: 5px 10px;
+                      color: #fff;
+                      margin: 10px 10px 15px 0px;
+                      float: left;
+                      .date {
+                          display: block;
+                          font-size: 10px;
+                      }
+                  }
+              }
+              .message.me {
+                  width: 70%;
+                  padding: 5px 10px;
+                  float: right;
+                  background: #2C3D4F;
+                  color: #fff;
+                  margin: 5px;
+                  border-radius: 5px;
+                  text-align: right;
+                  img.avatar {
+                      display: none;
+                  }
+                  .date {
+                      display: block;
+                      font-size: 10px;
+                  }
+              }
           }
-          .message {
-            position: relative;
-            background: #C4CDE0;
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            border-radius: 5px;
-            width: 70%;
-            padding: 5px 10px;
-            color: #222;
-            margin: 10px 10px 15px 0px;
-            float: left;
-            .date {
-              display: block;
-              font-size: 10px;
-            }
-          }
-        }
-        .message.me {
-          width: 70%;
-          padding: 5px 10px;
-          float: right;
-          background: #9575CD;
-          color: #fff;
-          margin: 5px;
-          border-radius: 5px;
-          text-align: right;
-          img.avatar {
-            display: none;
-          }
-          .date {
-            display: block;
-            font-size: 10px;
-          }
-        }
       }
-    }
-    .messages-page-footer {
-      padding-right: 0;
-      .message-editor {
-        margin-left: 2px;
-        padding-left: 5px;
-        background: white;
-        border-radius: 3px;
+      .messages-page-footer {
+          padding-right: 0;
+          .message-editor {
+              background: white;
+              border-radius: 10px;
+          }
+          .message-editor-button {
+              box-shadow: none;
+              margin: auto;
+          }
       }
-      .message-editor-button {
-        background: #9575CD;
-        border-radius: 50%;
-        box-shadow: none;
-        width: 40px;
-        height: 40px;
-        font-size: 17px;
-        margin: auto;
-      }
-    }
   }

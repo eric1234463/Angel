@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
-import { Chatroom } from './chatroom/chatroom';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import {AuthService} from '../../services/authservice';
+import {Component} from '@angular/core';
+import {NavController, App} from 'ionic-angular';
+import {Chatroom} from './chatroom/chatroom';
+import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import {AuthService, User} from '../../services/authservice';
+import {Observable} from 'rxjs/Observable';
 
-@Component({
-    templateUrl: 'chat.html'
-})
+@Component({templateUrl: 'chat.html'})
 export class Chat {
-
-    public chatList: FirebaseListObservable <any[]> ;
-    constructor(public navCtrl: NavController, public afDB: AngularFireDatabase, public appCtrl: App,public auth:AuthService) {
+    public user : User;
+    public chatList : FirebaseListObservable < any[] >;
+    constructor(public navCtrl : NavController, public afDB : AngularFireDatabase, public appCtrl : App, public auth : AuthService) {
         this.navCtrl = navCtrl;
-        this.chatList = afDB.list('/chat');
-        console.log(this.auth.getCurretnUser());
-        console.log(this.chatList);
+        this.user = this.auth.currentUser;
+        this.chatList = this
+            .afDB
+            .list('/chat');
     }
-    navigate() {
-        this.appCtrl.getRootNav().push(Chatroom);
+    navigate(chat) {
+        this
+            .appCtrl
+            .getRootNav()
+            .push(Chatroom, {chat: chat});
     }
 }

@@ -9,7 +9,6 @@ import {AngularFireDatabase} from 'angularfire2/database';
 export class HomePage {
 
     constructor(public navCtrl : NavController, public afAuth : AngularFireAuth, public afDB : AngularFireDatabase, public auth : AuthService, public alertCtrl : AlertController, public appCtrl : App) {
-        console.log('Hello');
     }
     ionViewDidLoad() {
         this
@@ -17,11 +16,11 @@ export class HomePage {
             .authState
             .subscribe(user => {
                 if (user.emailVerified) {
-                    console.log('success');
                     this.auth.setCurrentUser(user.email,user.uid,user.photoURL,user.displayName);
                     
                 } else {
                     user.sendEmailVerification();
+            
                     this
                         .afDB
                         .list('/user')

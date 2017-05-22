@@ -1,30 +1,32 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title>Chatroom</ion-title>
-  </ion-navbar>
+    <ion-navbar color="secondary">
+        <ion-title>{{receviver.displayName}}</ion-title>
+    </ion-navbar>
 </ion-header>
 <ion-content id="chat" class="chat">
-  <div class="messages">
-    <div class="messagesbox">
-      <img src="assets/girl.png" class="avatar">
-      <div class="message">
-        Hello
-        <span class="date">8:00pm</span>
-      </div>
+    <div class="messages">
+        <div *ngFor="let message of messageList| async">
+            <div class="messagesbox" *ngIf="user.uid != message.senderID">
+                <img src="assets/girl.png" class="avatar">
+                <div class="message">
+                    {{message.message}}
+                    <span class="date">{{message.createDt| amTimeAgo}}</span>
+                </div>
+            </div>
+            <div class="message me" *ngIf="user.uid == message.senderID">
+                {{message.message}}
+                <span class="date">{{message.createDt| amTimeAgo}}</span>
+            </div>
+        </div>
     </div>
-    <div class="message me">
-      Hello
-      <span class="date">8:00pm</span>
-    </div>
-  </div>
 </ion-content>
 <ion-footer>
-  <ion-toolbar class="messages-page-footer" position="bottom">
-      <ion-input type="text" placeholder="Type a message"  class="message-editor"></ion-input>
-      <ion-buttons end>
-        <button ion-button icon-only class="message-editor-button">
-                <ion-icon name="send" color="light"></ion-icon>
+    <ion-toolbar class="messages-page-footer" position="bottom" color="secondary">
+        <ion-input type="text" placeholder="Type a message" class="message-editor" [(ngModel)]='newMessage'></ion-input>
+        <ion-buttons end>
+            <button ion-button class="message-editor-button" (click)="sendMessage()">
+                Send
             </button>
-      </ion-buttons>
-  </ion-toolbar>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-footer>

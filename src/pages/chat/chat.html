@@ -5,17 +5,29 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <ion-item-sliding #item>
-            <button ion-item *ngFor="let chat of chatList| async" (click)="navigate()">
+        <ion-item-sliding #item *ngFor="let chat of chatList| async">
+            <button ion-item *ngIf="user.uid == chat.user1ID" (click)="navigate(chat)">
                 <ion-avatar item-left>
                     <img src="assets/boy.png">
                 </ion-avatar>
-                <h2>{{chat.name}}</h2>
-                <p>{{chat.message}}</p>
-                <p item-right>{{chat.time}}</p>
-                <ion-badge item-right color="danger">3</ion-badge>
+                <h2 *ngIf="chat.user1Love == true && chat.user2Love == true">{{chat.user2DisplayName}}</h2>
+                <h2 *ngIf="chat.user1Love == false && chat.user2Love == false">{{chat.user2ID}}</h2>
+                <p>{{chat.lastMessage}}</p>
+                
+                <p item-right>{{chat.updateDt| amTimeAgo}}</p>
+                <ion-badge item-right color="danger" *ngIf="chat.user2Unread > 0">{{chat.user2Unread}}</ion-badge>
+                
             </button>
-            
+            <button ion-item *ngIf="user.uid == chat.user2ID" (click)="navigate(chat)">
+                <ion-avatar item-left>
+                    <img src="assets/boy.png">
+                </ion-avatar>
+                <h2 *ngIf="chat.User1Love == TRUE && chat.User2Love == TRUE">{{chat.user1DisplayName}}</h2>
+                <h2 *ngIf="chat.User1Love == FALSE && chat.User2Love == FALSE">{{chat.user1}}</h2>
+                <p>{{chat.lastMessage}}</p>
+                <p item-right>{{chat.updateDt| amTimeAgo}}</p>
+                <ion-badge item-right color="danger" *ngIf="chat.user2Unread > 0">{{chat.user1Unread}}</ion-badge>
+            </button>
             <ion-item-options side="left">
                 <button ion-button color="primary"><ion-icon name="heart"></ion-icon>Love</button>
             </ion-item-options>
@@ -24,4 +36,5 @@
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>
+    
 </ion-content>
