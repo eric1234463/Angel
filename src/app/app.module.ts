@@ -16,6 +16,7 @@ import {Chatroom} from '../pages/chat/chatroom/chatroom';
 import {AuthService} from '../services/authservice';
 import {SignUpPage} from '../pages/signup/signup';
 import {MomentModule} from 'angular2-moment';
+import { Push} from '@ionic-native/push';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDQuiL3JT5bsT6EG806UjBbrhoz1UszMRQ",
@@ -57,6 +58,7 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     AuthService,
+    Push,
     SplashScreen, {
       provide: ErrorHandler,
       useClass: IonicErrorHandler

@@ -19,7 +19,11 @@ export class Chatroom {
             .get('chat');
         this.messageList = this
             .afDB
-            .list('/chat/' + chat.$key + '/messageList');
+            .list('/chat/' + chat.$key + '/messageList', {
+                query: {
+                    orderByChild: 'createDt'
+                }
+            });
         console.log(this.messageList);
         this.receviver = new User();
         if (this.user.uid == chat.user1ID) {
@@ -48,9 +52,8 @@ export class Chatroom {
             .afDB
             .list('/chat/' + chat.$key + '/messageList')
             .push(meessage);
-        
+
         this.newMessage = '';
-        console.log('success');
     }
 
 }

@@ -13,11 +13,12 @@ export class SignUpPage {
     public inputDisabled : boolean = true;
     public schoolEmail : string;
     public studentID : string;
-
+    public school : string;
     constructor(public formBuilder : FormBuilder, public navCtrl : NavController, public alertCtrl : AlertController, public auth : AuthService, public afDB : AngularFireDatabase, public appCtrl : App) {
         this.schoolList = afDB.list('/school');
         this.schoolEmail = '';
         this.studentID = '';
+        this.school = '';
         this.userForm = formBuilder.group({
             school: [
                 '', Validators.compose([Validators.required])
@@ -40,12 +41,13 @@ export class SignUpPage {
         });
     }
     selectSchool() {
-        this.userForm.value.schoolEmail = this.userForm.value.school;
-        this.schoolEmail = this.studentID + this.userForm.value.school;
+        this.userForm.value.schoolEmail = this.userForm.value.studentID + this.userForm.value.school;
+        this.schoolEmail = this.studentID + this.school;
     }
     changeStudentID() {
+        
         this.userForm.value.schoolEmail = this.userForm.value.studentID + this.userForm.value.school;
-        this.schoolEmail = this.studentID + this.userForm.value.school;
+        this.schoolEmail = this.studentID + this.school;
     }
     signup() {
         console.log(this.schoolEmail);
@@ -55,6 +57,22 @@ export class SignUpPage {
             .signupUser(this.schoolEmail, this.userForm.value.password)
             .then(success => {
                 console.log('Success');
+                 let alert = this
+                    .alertCtrl
+                    .create({
+                        title: 'Reminder',
+                        message: 'Please Verfied Your Email Before you press OK!',
+                        buttons: [
+                            {
+                                text: 'Ok',
+                                handler: () => {
+                                    this.appCtrl.getRootNav().push(TabsPage);
+                                }
+                            }
+                        ]
+                    });
+                alert.present();
+                
             }, error => {
                 console.log('Error');
                 let alert = this

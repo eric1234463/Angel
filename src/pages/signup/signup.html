@@ -10,7 +10,7 @@
             <ion-label>
                 <ion-icon class='inputIcon' color='primary' name="school"></ion-icon>
             </ion-label>
-            <ion-select formControlName="school" multiple="false" (ngModelChange)="selectSchool()">
+            <ion-select formControlName="school" multiple="false" [(ngModel)]='school' (ngModelChange)="selectSchool()">
                 <ion-option *ngFor="let school of schoolList| async" [value]="school.schoolEmail">{{school.schoolName}}</ion-option>
             </ion-select>
         </ion-item>
