@@ -8,23 +8,23 @@ import {AngularFireDatabase} from 'angularfire2/database';
 @Component({selector: 'page-home', templateUrl: 'home.html'})
 export class HomePage {
 
-    constructor(public navCtrl : NavController, public afAuth : AngularFireAuth, public afDB : AngularFireDatabase, public auth : AuthService, public alertCtrl : AlertController, public appCtrl : App) {
-    }
+    constructor(public navCtrl : NavController, public afAuth : AngularFireAuth, public afDB : AngularFireDatabase, public auth : AuthService, public alertCtrl : AlertController, public appCtrl : App) {}
     ionViewDidLoad() {
         this
             .afAuth
             .authState
             .subscribe(user => {
                 if (user.emailVerified) {
-                    this.auth.setCurrentUser(user.email,user.uid,user.photoURL,user.displayName);
-                    
-                } else {
-                    user.sendEmailVerification();
-            
                     this
                         .afDB
-                        .list('/user')
-                        .push({uid: user.uid, email: user.email, displayName: user.displayName, photoUrl: user.photoURL});
+                        .object('/user/' + user.uid)
+                        .subscribe(userObj => {
+                            this
+                                .auth
+                                .setCurrentUser(userObj);
+                        })
+                } else {
+                    user.sendEmailVerification();
                     this
                         .auth
                         .logoutUser()

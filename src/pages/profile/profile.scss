@@ -1,11 +1,31 @@
 page-contact {
     .profileIcon{
-        background-color: #2C3D4F;
-        color: #00BFA5;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        font-size: 40px;
+       width: 100%;
+       height: auto;
+       border-radius: 50%;
+    }
+    .displayName{
+        text-align: center;
+        font-weight: bold;
+        color:#fff;
+    }
+    .profileRight{
+        text-align: right;
 
+    }
+   
+    .profileGrid{
+        padding: 0;
+        background: #2C3D4F;
+    }
+    .profileGridDetail{
+        padding: 0;
+        background: #00BFA5;
+        border-radius: 10px;
+    }
+    .profileRow{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        color: #fff;
     }
 }

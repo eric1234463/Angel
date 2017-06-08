@@ -10,6 +10,15 @@
             <ion-label>
                 <ion-icon class='inputIcon' color='primary' name="school"></ion-icon>
             </ion-label>
+            <ion-select formControlName="gender" multiple="false">
+                <ion-option  [value]="M">Men</ion-option>
+                <ion-option  [value]="F">Female</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item class="inputBox">
+            <ion-label>
+                <ion-icon class='inputIcon' color='primary' name="school"></ion-icon>
+            </ion-label>
             <ion-select formControlName="school" multiple="false" [(ngModel)]='school' (ngModelChange)="selectSchool()">
                 <ion-option *ngFor="let school of schoolList| async" [value]="school.schoolEmail">{{school.schoolName}}</ion-option>
             </ion-select>
@@ -37,6 +46,17 @@
         <ion-item class="error-message" *ngIf="!userForm.controls.schoolEmail.valid  &&
       userForm.controls.schoolEmail.dirty">
             <p>Please enter a valid email.</p>
+        </ion-item>
+         <ion-item class="inputBox">
+            <ion-label>
+                <ion-icon class='inputIcon' color='primary' name="contact"></ion-icon>
+            </ion-label>
+            <ion-input formControlName="userName" type="text"  placeholder="Your User Name" [class.invalid]="!userForm.controls.userName.valid &&
+          userForm.controls.userName.dirty"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="!userForm.controls.userName.valid  &&
+      userForm.controls.userName.dirty">
+            <p>Please enter a valid username.</p>
         </ion-item>
         <ion-item class="inputBox">
             <ion-label>

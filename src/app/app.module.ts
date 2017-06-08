@@ -16,7 +16,11 @@ import {Chatroom} from '../pages/chat/chatroom/chatroom';
 import {AuthService} from '../services/authservice';
 import {SignUpPage} from '../pages/signup/signup';
 import {MomentModule} from 'angular2-moment';
-import { Push} from '@ionic-native/push';
+import {Firebase} from '@ionic-native/firebase';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { Push } from '@ionic-native/push';
+import { Http,HttpModule} from '@angular/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDQuiL3JT5bsT6EG806UjBbrhoz1UszMRQ",
@@ -40,10 +44,12 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule, IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    MomentModule
+    MomentModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,6 +64,7 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     AuthService,
+    Firebase,
     Push,
     SplashScreen, {
       provide: ErrorHandler,

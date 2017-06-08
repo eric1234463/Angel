@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EmailValidator} from '../login/email';
 import {AuthService} from '../../services/authservice';
 import {TabsPage} from '../tabs/tabs';
+import {AngularFireAuth} from 'angularfire2/auth';
 
 @Component({selector: 'page-signup', templateUrl: 'signup.html'})
 export class SignUpPage {
@@ -14,17 +15,26 @@ export class SignUpPage {
     public schoolEmail : string;
     public studentID : string;
     public school : string;
-    constructor(public formBuilder : FormBuilder, public navCtrl : NavController, public alertCtrl : AlertController, public auth : AuthService, public afDB : AngularFireDatabase, public appCtrl : App) {
+    constructor(public formBuilder : FormBuilder, public afAuth : AngularFireAuth, public navCtrl : NavController, public alertCtrl : AlertController, public auth : AuthService, public afDB : AngularFireDatabase, public appCtrl : App) {
         this.schoolList = afDB.list('/school');
         this.schoolEmail = '';
         this.studentID = '';
         this.school = '';
         this.userForm = formBuilder.group({
+            gender: [
+                '', Validators.compose([Validators.required])
+            ],
             school: [
                 '', Validators.compose([Validators.required])
             ],
             schoolEmail: [
                 '', Validators.compose([Validators.required, EmailValidator.isValid])
+            ],
+            userName: [
+                '', Validators.compose([
+                    Validators.required, Validators.minLength(3),
+                    Validators.maxLength(12)
+                ])
             ],
             studentID: [
                 '', Validators.compose([
@@ -45,7 +55,7 @@ export class SignUpPage {
         this.schoolEmail = this.studentID + this.school;
     }
     changeStudentID() {
-        
+
         this.userForm.value.schoolEmail = this.userForm.value.studentID + this.userForm.value.school;
         this.schoolEmail = this.studentID + this.school;
     }
@@ -56,23 +66,30 @@ export class SignUpPage {
             .auth
             .signupUser(this.schoolEmail, this.userForm.value.password)
             .then(success => {
-                console.log('Success');
-                 let alert = this
-                    .alertCtrl
-                    .create({
-                        title: 'Reminder',
-                        message: 'Please Verfied Your Email Before you press OK!',
-                        buttons: [
-                            {
-                                text: 'Ok',
-                                handler: () => {
-                                    this.appCtrl.getRootNav().push(TabsPage);
-                                }
-                            }
-                        ]
+                const token = localStorage.getItem('device_token');
+                this
+                    .afAuth
+                    .authState
+                    .subscribe(user => {
+                        const userProfile = {
+                            uid: user.uid,
+                            email: user.email,
+                            gender: this.userForm.value.gender,
+                            displayName: this.userForm.value.userName,
+                            photoUrl: user.photoURL,
+                            token: token
+                        }
+                        this
+                            .afDB
+                            .object('/user/' + user.uid)
+                            .set(userProfile);
+                        console.log('Success');
                     });
-                alert.present();
-                
+                this
+                    .appCtrl
+                    .getRootNav()
+                    .push(TabsPage);
+
             }, error => {
                 console.log('Error');
                 let alert = this

@@ -1,81 +1,99 @@
 import {Component} from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Platform, AlertController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {TabsPage} from '../pages/tabs/tabs';
 import {LoginPage} from '../pages/login/login';
+import {Firebase} from '@ionic-native/firebase';
 import {Push, PushObject, PushOptions} from '@ionic-native/push';
+import {AuthService} from '../services/authservice';
+import {Storage} from '@ionic/storage';
 
 @Component({templateUrl: 'app.html'})
 export class MyApp {
-  rootPage : any;
+    rootPage : any;
 
-  constructor(platform : Platform, statusBar : StatusBar, splashScreen : SplashScreen, public afAuth : AngularFireAuth,private push: Push) {
-    const authObserver = afAuth
-      .authState
-      .subscribe(user => {
-        if (user) {
-          this.rootPage = TabsPage;
-          authObserver.unsubscribe();
-        } else {
-          this.rootPage = LoginPage;
-          authObserver.unsubscribe();
+    constructor(private platform : Platform, public localStorage : Storage, public auth : AuthService, public alertCtrl : AlertController, private push : Push, private statusBar : StatusBar, private splashScreen : SplashScreen, public afAuth : AngularFireAuth, public firebase : Firebase) {
+        const authObserver = afAuth
+            .authState
+            .subscribe(user => {
+                if (user) {
+                    this.rootPage = TabsPage;
+                    authObserver.unsubscribe();
+                } else {
+                    this.rootPage = LoginPage;
+                    authObserver.unsubscribe();
+                }
+            });
+        this.initializeApp();
+        this.initPushNotification();
+    }
+    initializeApp() {
+        this
+            .platform
+            .ready()
+            .then(() => {
+                // Okay, so the platform is ready and our plugins are available. Here you can do
+                // any higher level native things you might need.
+                this
+                    .statusBar
+                    .backgroundColorByHexString('#2C3D4F');
+                this
+                    .splashScreen
+                    .hide();
+            });
+    }
+    initPushNotification() {
+        if (!this.platform.is('cordova')) {
+            console.warn("Push notifications not initialized. Cordova is not available - Run in physical d" +
+                    "evice");
+            return;
         }
-      });
-    platform
-      .ready()
-      .then(() => {
-        // Okay, so the platform is ready and our plugins are available. Here you can do
-        // any higher level native things you might need.
-        statusBar.backgroundColorByHexString('#2C3D4F');
-        splashScreen.hide();
-      });
-  }
+        const options : PushOptions = {
+            android: {
+                senderID: "685439005963",
+                icon: 'icon.png',
+                vibrate: "true",
+                sound: "true"
+            },
+            ios: {
+                alert: "true",
+                badge: false,
+                sound: "true"
+            },
+            windows: {}
+        };
+        const pushObject : PushObject = this
+            .push
+            .init(options);
 
-  pushSetUp() {
-    this
-      .push
-      .hasPermission()
-      .then((res : any) => {
+        pushObject
+            .on('registration')
+            .subscribe((data : any) => {
+                console.log("device token ->", data.registrationId);
+                localStorage.setItem('device_token', data.registrationId);
+            });
 
-        if (res.isEnabled) {
-          console.log('We have permission to send push notifications');
-        } else {
-          console.log('We do not have permission to send push notifications');
-        }
+        pushObject
+            .on('notification')
+            .subscribe((data : any) => {
+                console.log('message', data.message);
+                //if user using app and push notification comes
+                if (data.additionalData.foreground) {
+                    // if application open, show popup
+                    console.log("Push notification clicked");
+                } else {
+                    //if user NOT using app and push notification comes
+                    //TODO: Your logic on click of push notification directly
 
-      });
+                    console.log("Push notification clicked");
+                }
+            });
 
-    // to initialize push notifications
-
-    const options : PushOptions = {
-      android: {
-        senderID: '685439005963'
-      },
-      ios: {
-        alert: 'true',
-        badge: true,
-        sound: 'false'
-      },
-      windows: {}
-    };
-
-    const pushObject : PushObject = this
-      .push
-      .init(options);
-
-    pushObject
-      .on('notification')
-      .subscribe((notification : any) => console.log('Received a notification', notification));
-
-    pushObject
-      .on('registration')
-      .subscribe((registration : any) => console.log('Device registered', registration));
-
-    pushObject
-      .on('error')
-      .subscribe(error => console.error('Error with Push plugin', error));
-  }
+        pushObject
+            .on('error')
+            .subscribe(error => console.error('Error with Push plugin', error));
+    }
 
 }

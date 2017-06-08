@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "685439005963",
+    "firebase_url": "https://angel-b86e1.firebaseio.com",
+    "project_id": "angel-b86e1",
+    "storage_bucket": "angel-b86e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685439005963:android:7b02d615307fef51",
+        "android_client_info": {
+          "package_name": "com.ionicframework.angel649362"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685439005963-1vvnmgffb35l2j31jenip0gfjs2a5nab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz4TIHuw3V23NzCO_bJec0MqPrQJp-wuM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
