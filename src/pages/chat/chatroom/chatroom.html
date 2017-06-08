@@ -3,21 +3,24 @@
         <ion-title>{{receviver.displayName}}</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content id="chat" class="chat">
+<ion-content>
     <div class="messages">
         <div *ngFor="let message of messageList| async">
-            <div class="messagesbox" *ngIf="user.uid != message.senderID">
+            <div class="messagesbox other" *ngIf="user.uid != message.senderID">
                 <img src="assets/girl.png" class="avatar">
                 <div class="message">
                     {{message.message}}
                     <span class="date">{{message.createDt| amTimeAgo}}</span>
                 </div>
             </div>
-            <div class="message me" *ngIf="user.uid == message.senderID">
-                {{message.message}}
-                <span class="date">{{message.createDt| amTimeAgo}}</span>
+            <div class="messagesbox me" *ngIf="user.uid == message.senderID">
+                <div class="message">
+                    {{message.message}}
+                    <span class="date">{{message.createDt| amTimeAgo}}</span>
+                </div>
             </div>
         </div>
+
     </div>
 </ion-content>
 <ion-footer>

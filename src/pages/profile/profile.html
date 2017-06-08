@@ -1,21 +1,43 @@
 <ion-header>
-  <ion-navbar color="secondary">
-    <ion-title>Profile</ion-title>
-  </ion-navbar>
+    <ion-toolbar color="secondary">
+        <ion-buttons start>
+            <button ion-button icon-only (click)='edit()'><ion-icon name="create"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>Profile</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)='logout()'><ion-icon name="close"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="assets/boy.png">
-      </ion-avatar>
-      <h2>Cher</h2>
-      <p>Ugh. As if.</p>
-    </ion-item>
-	 
-    <button ion-item inset (click)='logout()'>
-      <ion-icon name="close" item-left class='profileIcon' ></ion-icon>
-      Logout
-    </button >
-  </ion-list>
+    <ion-grid class="profileGrid">
+        <ion-row class="profileBackground">
+            <ion-col col-4></ion-col>
+            <ion-col col-4>
+                <img class='profileIcon' src="assets/demo.png">
+            </ion-col>
+            <ion-col col-4></ion-col>
+            <ion-col col-12 class="displayName">
+                {{user.displayName}}
+            </ion-col>
+            <ion-col col-12 class="displayName">
+                {{user.displayName}}
+            </ion-col>
+        </ion-row>
+
+        <ion-grid class="profileGridDetail">
+            <ion-row class="profileRow">
+                <ion-col col-4>Gender</ion-col>
+                <ion-col col-8 class="profileRight">{{user.gender}}</ion-col>
+            </ion-row>
+            <ion-row class="profileRow">
+                <ion-col col-4>Horoscope</ion-col>
+                <ion-col col-8 class="profileRight">{{user.horoscope}}</ion-col>
+            </ion-row>
+            <ion-row class="profileRow">
+                <ion-col col-4>Enneagram</ion-col>
+                <ion-col col-8 class="profileRight">{{user.gender}}</ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-grid>
 </ion-content>
