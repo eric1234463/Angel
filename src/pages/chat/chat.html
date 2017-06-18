@@ -28,7 +28,7 @@
                 <ion-badge item-right color="danger" *ngIf="chat.user2Unread > 0">{{chat.user2Unread}}</ion-badge>
             </button>
             <ion-item-options side="left">
-                <button ion-button color="primary"><ion-icon name="heart"></ion-icon>Love</button>
+                <button ion-button color="primary" (click)='love(chat)'><ion-icon name="heart"></ion-icon>Love</button>
             </ion-item-options>
             <ion-item-options side="right">
                 <button ion-button color="danger" (click)='remove(chat)'><ion-icon name="close-circle"></ion-icon>Break</button>

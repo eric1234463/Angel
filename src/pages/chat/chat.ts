@@ -3,7 +3,6 @@ import {NavController, App, AlertController} from 'ionic-angular';
 import {Chatroom} from './chatroom/chatroom';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {AuthService, User} from '../../services/authservice';
-import {Observable} from 'rxjs/Observable';
 
 @Component({templateUrl: 'chat.html'})
 export class Chat {
@@ -62,6 +61,38 @@ export class Chat {
                 ]
             });
         alert.present();
-
+    }
+    love(chat){
+         let alert = this
+            .alertCtrl
+            .create({
+                title: 'Chance',
+                message: 'Are you sure to this people a chance? ?',
+                buttons: [
+                    {
+                        text: 'No',
+                        role: 'cancel',
+                        handler: () => {
+                            console.log('Cancel clicked');
+                        }
+                    }, {
+                        text: 'Yes',
+                        handler: () => {
+                            if(chat.user1 == this.user.uid){
+                                this
+                                    .afDB
+                                    .object('/chat/' + chat.$key)
+                                    .update({user1Love: true})
+                            }else{
+                                this
+                                    .afDB
+                                    .object('/chat/' + chat.$key)
+                                    .update({user1Love: true})
+                            }
+                        }
+                    }
+                ]
+            });
+        alert.present();
     }
 }

@@ -16,15 +16,15 @@ $font-path: "../assets/fonts";
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 $colors: ( primary: #00BFA5, secondary: #2C3D4F, danger: #f53d3d, light: #f4f4f4, dark: #222);
-$tabs-background:#2C3D4F;
-$tabs-ios-tab-icon-color:#00BFA5;
-$tabs-md-tab-icon-color:#00BFA5;
-$toolbar-md-button-color:#00BFA5;
+$tabs-background:color($colors, secondary);
+$tabs-ios-tab-icon-color:color($colors, primary);
+$tabs-md-tab-icon-color:color($colors, primary);
+$toolbar-md-button-color:color($colors, primary);
 .toolbar-title-md{
-	color: #00BFA5!important;
+	color: color($colors, primary)!important;
 }
 .toolbar-title-ios{
-	color: #00BFA5!important;
+	color: color($colors, primary)!important;
 }
 // Android Setting
 // App iOS Variables
